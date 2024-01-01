@@ -7,7 +7,7 @@
 */
 
 if( ! defined('ABSPATH') ) exit;
-// require_once plugin_dir_path(__FILE__) . 'inc/generatePet.php';
+require_once plugin_dir_path(__FILE__) . 'inc/product-search-route.php';
 
 class TOMCBookshelvesPlugin {
     function __construct() {
@@ -22,6 +22,10 @@ class TOMCBookshelvesPlugin {
         add_action('init', array($this, 'registerScripts'));
         add_action('wp_enqueue_scripts', array($this, 'enqueueStyles'));
         add_filter('template_include', array($this, 'loadTemplate'), 99);
+
+        wp_localize_script('tomc-bookshelves-js', 'tomcBookshelvesData', array(
+            'root_url' => get_site_url()
+        ));
     }
 
     function addMyBookshelvesPage() {
@@ -41,6 +45,7 @@ class TOMCBookshelvesPlugin {
 
     function enqueueStyles(){
         wp_enqueue_style('tomc_bookshelf_styles');
+        wp_enqueue_script('tomc-bookshelves-js', plugin_dir_url(__FILE__) . '/build/index.js', array('jquery'), '1.0', true);
     }
 
     function onActivate() {

@@ -53,7 +53,7 @@ get_header();
                 <?php foreach($removedShelves as $shelf){
                     ?><div class="page-accent-profile">
                         <h3 class="left-text sans-text"><?php echo $shelf->shelfname; ?></h3>
-                        <button class="tomc-bookshelves--rename-shelf">rename shelf</button><button class="tomc-bookshelves--remove-shelf">remove shelf</button>
+                        <button class="tomc-bookshelves--delete-shelf">delete shelf permanently</button>
                         <?php $shelfproducts = $wpdb->get_results("SELECT productid from $bookshelf_products_table WHERE bookshelfid = $shelf->id;"); 
                         if ($shelfproducts){
                             ?><div class="book-sections-container">

@@ -34,3 +34,40 @@
     border-radius: 50%;
     cursor: pointer;
 }
+.tomc-bookshelves__rename-box{
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1110;
+    position: fixed;
+    left: 30vw;
+    right: 30vw;
+    top: 35vh;
+    bottom: 35vh;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 15px;
+    box-shadow: 0px 8px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 10px;
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(1.09);
+    transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+    box-sizing: border-box;
+}
+.tomc-bookshelves__rename-box--active{
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+}
+
+@media screen and (max-width: 870px){
+    .tomc-bookshelves__rename-box{
+        right: 25vw;
+        left: 25vw;
+    }
+}
+@media screen and (max-width: 660px){
+    .tomc-bookshelves__rename-box{
+        right: 15vw;
+        left: 15vw;
+    }
+}
