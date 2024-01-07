@@ -1,3 +1,3 @@
-import SearchBooks from './modules/searchBooks';
+import Bookshelves from './modules/bookshelves';
 
-const tomcBookshelvesSearch = new SearchBooks()
+const tomcBookshelvesSearch = new Bookshelves();

@@ -2,9 +2,9 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/modules/searchBooks.js":
+/***/ "./src/modules/bookshelves.js":
 /*!************************************!*\
-  !*** ./src/modules/searchBooks.js ***!
+  !*** ./src/modules/bookshelves.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -15,42 +15,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 
-class SearchBooks {
+class Bookshelves {
   // 1. describe and create/initiate object
   constructor() {
-    // this.addRenameBoxHTML();
-    this.renameBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".tomc-bookshelves__rename-box");
-    this.renameButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".tomc-bookshelves--rename-shelf");
+    this.removeShelfButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".tomc-bookshelves--remove-shelf");
+    this.renameButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".tomc-bookshelves--rename-shelf");
     this.addBook = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".tomc-bookshelves__add-book");
     this.searchOverlay = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".tomc-bookshelves__search-overlay");
-    //         this.addSearchHTML();
-    //         this.resultsDiv = $("#search-overlay__results");
-    //         this.openButton = $(".js-search-trigger");
-    this.closeButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".tomc-bookshelves-overlay__close");
-    //         this.searchField = $("#search-term");
+    this.renameCancelButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".tomc-bookshelves--cancel-name");
+    this.deleteCancelButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".tomc-bookshelves--cancel-delete");
     this.events();
-    //         this.isOverlayOpen = false;
-    //         this.isSpinnerVisible = false;
-    //         this.previousValue;
-    //         this.typingTimer;
+    this.isSearchOverlayOpen = false;
   }
   // // 2. events
   events() {
-    this.renameButton.on("click", this.openRenameBox.bind(this));
-    this.addBook.on("click", this.opensearchOverlay.bind(this));
-    // this.openButton.on("click", this.openOverlay.bind(this));
-    this.closeButton.on("click", this.closeOverlay.bind(this));
-    // $(document).on("keydown", this.keyPressDispatcher.bind(this));
-    // this.searchField.on("keyup", this.typingLogic.bind(this));
+    this.removeShelfButtons.on("click", function () {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent("div").parent("div").children("div.tomc-bookshelves--delete-shelf-overlay").removeClass("tomc-bookshelves--display-none");
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()("body").addClass("body-no-scroll");
+    });
+    this.deleteCancelButtons.on("click", function () {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent("div").addClass("tomc-bookshelves--display-none");
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()("body").removeClass("body-no-scroll");
+    });
+    this.renameButtons.on("click", function () {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent("div.tomc-bookshelves--shelf-name-section").addClass("tomc-bookshelves--display-none");
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent("div").parent("div").children("div.tomc-bookshelves--shelf-name-center").removeClass("tomc-bookshelves--display-none");
+    });
+    this.renameCancelButtons.on("click", function () {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent("div").parent("div.page-accent-profile").children("div.tomc-bookshelves--shelf-name-section").removeClass("tomc-bookshelves--display-none");
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent("div").addClass("tomc-bookshelves--display-none");
+    });
   }
 
   // // 3. methods (functions, actions...)
-  openRenameBox() {
-    this.renameBox.addClass("tomc-bookshelves__rename-box--active");
-  }
   openSearchOverlay() {
     console.log("opening the search box");
-    this.searchOverlay.addClass("tomc-bookshelves__search-overlay--active");
+    // this.searchOverlay.addClass("tomc-bookshelves__box--active");
   }
   //     openOverlay(){
   //         this.searchOverlay.addClass("search-overlay--active");
@@ -60,11 +60,11 @@ class SearchBooks {
   //         this.isOverlayOpen = true;
   //         return false;
   //     }
-  closeOverlay() {
-    this.searchOverlay.removeClass("search-overlay--active");
-    this.resultsDiv.html('');
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()("body").removeClass("body-no-scroll");
-    this.isOverlayOpen = false;
+  closeSearchOverlay() {
+    console.log("closing time");
+    // this.renameBox.removeClass("tomc-bookshelves__box--active");
+    // $("body").removeClass("body-no-scroll");
+    // this.isSearchOverlayOpen = false;
   }
   //     typingLogic() {
   //         if (this.searchField.val() != this.previousValue) {
@@ -133,7 +133,7 @@ class SearchBooks {
   //         `);
   // }
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SearchBooks);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Bookshelves);
 
 /***/ }),
 
@@ -222,9 +222,9 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _modules_searchBooks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/searchBooks */ "./src/modules/searchBooks.js");
+/* harmony import */ var _modules_bookshelves__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/bookshelves */ "./src/modules/bookshelves.js");
 
-const tomcBookshelvesSearch = new _modules_searchBooks__WEBPACK_IMPORTED_MODULE_0__["default"]();
+const tomcBookshelvesSearch = new _modules_bookshelves__WEBPACK_IMPORTED_MODULE_0__["default"]();
 })();
 
 /******/ })()
