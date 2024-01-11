@@ -8,35 +8,59 @@ function tomcBookshelvesRegisterRoute() {
         'callback' => 'tomcBookshelvesSearchResults'
     ));
 
-    register_rest_route('tomcBookshelves/v1', 'manageShelf', array(
-        'methods' => 'DELETE',
-        'callback' => 'deleteShelf'
-    ));
-
-    register_rest_route('tomcBookshelves/v1', 'manageShelfProducts', array(
+    register_rest_route('tomcBookshelves/v1', 'manageProducts', array(
         'methods' => 'DELETE',
         'callback' => 'deleteShelfProduct'
     ));
+
+    register_rest_route('tomcBookshelves/v1', 'manageShelves', array(
+        'methods' => 'POST',
+        'callback' => 'addAllBooks'
+    ));
 }
 
-function deleteShelfProduct(){
-    return 'Thanks for trying to delete a shelf product!';
+function deleteShelfProduct($data){
+    $shelfProductId = sanitize_text_field($data['product']);
+    global $wpdb;
+    $bookshelf_products_table = $wpdb->prefix . "tomc_bookshelf_products";
+    if (is_user_logged_in()){
+        $wpdb->delete($bookshelf_products_table, array('id' => $shelfProductId));
+        return 'success';
+    } else {
+        wp_safe_redirect(site_url('/my-account'));
+        return 'fail';
+    }
 }
 
-// function renameShelf($data){
-//     $newname = sanitize_text_field($data['newname']);
-//     $shelfId = $data['shelfId'];
-//     if (is_user_logged_in()){
-//         // global $wpdb;
-//         // $wpdb->update($this->bookshelves_table, ['shelfname' => $newname], ['shelfid' => $shelfId]);
-//         wp_safe_redirect(site_url('/my-bookshelves'));
-//     } else {
-//         wp_safe_redirect(site_url('/my-account'));
-//     }
-// }
-
-function deleteShelf(){
-    return 'Thanks for trying to delete a shelf!';
+function addAllBooks($data){
+    $shelfId = sanitize_text_field($data['shelf']);
+    $userId = get_current_user_id();
+    global $wpdb;
+    $bookshelf_products_table = $wpdb->prefix . "tomc_bookshelf_products";
+    $term_taxonomy_table = $wpdb->prefix . "term_taxonomy";
+    $terms_table = $wpdb->prefix . "terms";
+    $term_relationships_table = $wpdb->prefix . "term_relationships";
+    $posts_table = $wpdb->prefix . "posts";
+    if (is_user_logged_in()){
+        $wpdb->query($wpdb->prepare("insert into %i (bookshelfid, productid)
+        select %d, p.id from %i tt
+        join %i t on tt.term_id = t.term_id
+        join %i tr on tr.term_taxonomy_id = tt.term_taxonomy_id
+        join %i p on p.id = tr.object_id
+        where t.name = 'ebooks'
+        and p.post_author = %d", array(
+            $bookshelf_products_table, 
+            $shelfId, $term_taxonomy_table, 
+            $terms_table, 
+            $term_relationships_table, 
+            $posts_table,
+            $userId
+        )));
+        return 'success';
+    } else {
+        wp_safe_redirect(site_url('/my-account'));
+        return 'fail';
+    }
 }
 
 function tomcBookshelvesSearchResults($data) {

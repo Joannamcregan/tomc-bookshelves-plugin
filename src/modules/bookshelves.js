@@ -5,6 +5,8 @@ class Bookshelves {
     constructor() {
         this.removeShelfButtons = $(".tomc-bookshelves--remove-shelf");
         this.renameButtons = $(".tomc-bookshelves--rename-shelf");
+        this.removeProductButtons = $(".tomc-bookshelves--remove-book");
+        this.addAllBooksButtons = $(".tomc-bookshelves--add-all-books");
         this.addBook = $(".tomc-bookshelves__add-book");
         this.searchOverlay = $(".tomc-bookshelves__search-overlay");
         this.renameCancelButtons = $(".tomc-bookshelves--cancel-name");
@@ -30,9 +32,43 @@ class Bookshelves {
             $(this).parent("div").parent("div.page-accent-profile").children("div.tomc-bookshelves--shelf-name-section").removeClass("tomc-bookshelves--display-none");
             $(this).parent("div").addClass("tomc-bookshelves--display-none");
         });
+        this.removeProductButtons.on("click", this.deleteShelfProduct.bind(this));
+        this.addAllBooksButtons.on("click", this.addAllBooks.bind(this));
     }
 
 // // 3. methods (functions, actions...)
+    deleteShelfProduct(e){
+        $.ajax({
+            beforeSend: (xhr) => {
+                xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+            },
+            url: tomcBookshelvesData.root_url + '/wp-json/tomcBookshelves/v1/manageProducts',
+            type: 'DELETE',
+            data: {'product' : $(e.target).data('product-id')},
+            success: (response) => {
+                $(e.target).parent("div.book-section--small").slideUp();
+            },
+            error: (response) => {
+                console.log(response);
+            }
+        })
+    }
+    addAllBooks(e){
+        $.ajax({
+            beforeSend: (xhr) => {
+                xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+            },
+            url: tomcBookshelvesData.root_url + '/wp-json/tomcBookshelves/v1/manageShelves',
+            type: 'POST',
+            data: {'shelf' : $(e.target).data('shelf-id')},
+            success: (response) => {
+                location.reload(true);
+            },
+            error: (response) => {
+                console.log(response);
+            }
+        })
+    }
     openSearchOverlay(){
         console.log("opening the search box");
         // this.searchOverlay.addClass("tomc-bookshelves__box--active");

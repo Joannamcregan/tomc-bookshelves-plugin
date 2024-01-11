@@ -48,21 +48,21 @@ get_header();
                             </form>
                             <button class="tomc-bookshelves--cancel-delete tomc-bookshelves--cancel-button">cancel</button>
                         </div>
-                        <?php $shelfproducts = $wpdb->get_results("SELECT productid from $bookshelf_products_table WHERE bookshelfid = $shelf->id;"); 
+                        <?php $shelfproducts = $wpdb->get_results("SELECT productid, id from $bookshelf_products_table WHERE bookshelfid = $shelf->id;"); 
                         if ($shelfproducts){
                             ?><div class="book-sections-container">
                                 <div class="gray-box"><p>add a book</p></div>
                                 <?php foreach($shelfproducts as $prod){
-                                    ?><div class="book-section--small" data-product-id="<?php echo $prod->productid; ?>">
+                                    ?><div class="book-section--small">
                                         <img class="book-cover--small" src="<?php echo get_the_post_thumbnail_url($prod->productid); ?>"/>
-                                        <button aria-label="remove book" class="tomc-bookshelves--remove-book">-</button>
+                                        <button aria-label="remove book" class="tomc-bookshelves--remove-book" data-product-id="<?php echo $prod->id; ?>">-</button>
                                     </div> 
                                 <?php }
                             ?></div>
                         <?php } else {
                             ?><div class="book-sections-container">
                                 <div class="gray-box"><p>add a book</p></div>
-                                <div class="gray-box"><p>add all books you've written</p></div>
+                                <div class="gray-box tomc-bookshelves--add-all-books" data-shelf-id="<?php echo $shelf->id; ?>"><p>add all books you've published</p></div>
                             </div>
                         <?php }
                     ?></div>                 
