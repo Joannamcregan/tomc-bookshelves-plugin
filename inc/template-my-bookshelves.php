@@ -13,7 +13,7 @@ get_header();
             <div class="tomc-bookshelves--shelf-name-center">
                 <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="POST">
                     <input type="hidden" name="action" value="createshelf">
-                    <input class="tomc-bookshelves--new-name" name="newshelfname" placeholder="your new shelf"><button class="tomc-bookshelves--save-name">save</button>
+                    <input class="tomc-bookshelves--new-name centered-text" name="newshelfname" placeholder="your new shelf"><button class="tomc-bookshelves--save-name">save</button>
                 </form>
             </div>
         </div>
@@ -25,7 +25,7 @@ get_header();
             ?><div class="third-screen">
                 <h2 class="centered-text">Edit Your Bookshelves</h2>
                 <?php foreach($bookshelves as $shelf){
-                    ?><div class="page-accent-profile" data-shelf-id="<?php echo $shelf->id; ?>">
+                    ?><div class="page-accent-profile">
                         <div class="tomc-bookshelves--shelf-name-section">
                             <h3 class="left-text sans-text"><?php echo str_replace("\'", "'", $shelf->shelfname); ?></h3>
                             <button class="tomc-bookshelves--rename-shelf">rename shelf</button><button class="tomc-bookshelves--remove-shelf">delete shelf</button>
@@ -51,17 +51,17 @@ get_header();
                         <?php $shelfproducts = $wpdb->get_results("SELECT productid, id from $bookshelf_products_table WHERE bookshelfid = $shelf->id;"); 
                         if ($shelfproducts){
                             ?><div class="book-sections-container">
-                                <div class="gray-box"><p>add a book</p></div>
+                                <div class="gray-box tomc-bookshelves__add-book" data-shelf-id="<?php echo $shelf->id; ?>"><p>add a book</p></div>
                                 <?php foreach($shelfproducts as $prod){
                                     ?><div class="book-section--small">
-                                        <img class="book-cover--small" src="<?php echo get_the_post_thumbnail_url($prod->productid); ?>"/>
+                                        <img class="tomc-bookshelf--book-cover" src="<?php echo get_the_post_thumbnail_url($prod->productid); ?>"/>
                                         <button aria-label="remove book" class="tomc-bookshelves--remove-book" data-product-id="<?php echo $prod->id; ?>">-</button>
                                     </div> 
                                 <?php }
                             ?></div>
                         <?php } else {
                             ?><div class="book-sections-container">
-                                <div class="gray-box"><p>add a book</p></div>
+                                <div class="gray-box tomc-bookshelves__add-book" data-shelf-id="<?php echo $shelf->id; ?>"><p>add a book</p></div>
                                 <div class="gray-box tomc-bookshelves--add-all-books" data-shelf-id="<?php echo $shelf->id; ?>"><p>add all books you've published</p></div>
                             </div>
                         <?php }
@@ -70,20 +70,20 @@ get_header();
             ?></div>
         <?php }
 
-        ?><div class="tomc-bookshelves__search-overlay">
+        ?><div class="tomc-bookshelves__search-overlay" data-id="123">
             <div class="tomc-bookshelves__search-overlay__top">
                 <div class="overlay-main-container"> 
-                <i class="fa fa-window-close search-overlay__close" aria-hidden = "true"></i>
-                <div class="overlay-input-container">
-                    <i class="fa fa-search search-overlay__icon" aria-hidden = "true"></i>
-                    <input type="text" class="search-term" placeholder = "What are you looking for?" id = "search-term">
-                </div>
+                    <i class="fa fa-window-close tomc-bookshelves__search-overlay__close" aria-hidden = "true"></i>
+                    <!-- <span class="fa fa-window-close tomc-bookshelves__search-overlay__close" aria-hidden = "true" aria-label = "close button">X</span> -->
+                    <div class="overlay-input-container">
+                        <i class="fa fa-search search-overlay__icon" aria-hidden = "true"></i>
+                        <!-- <span class="fa fa-search search-overlay__icon" aria-hidden = "true">S</span> -->
+                        <input type="text" class="search-term" placeholder = "What are you looking for?" id = "tomc-bookshelves__search-term">
+                    </div>
                 </div>
             </div>
-        </div>
-
-            <div class="container">
-                <div id="search-overlay__results">
+            <div class="tomc-bookshelves--container">
+                <div id="tomc-bookshelves--search-results">
                 </div>
             </div>
         </div>

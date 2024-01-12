@@ -1,3 +1,9 @@
+.tomc-bookshelf--book-cover{
+    max-width: 150px;
+    height: auto;
+    margin: 0 auto 0 auto;
+    border: solid gray 3px;
+}
 .tomc-bookshelves--save-name{
     background-color: #0c6980;
     color: white;
@@ -70,11 +76,6 @@
     background-color: #f6f0e9;
     padding-top: 20vh;
 }
-.tomc-bookshelves__box--active{
-    visibility: visible;
-    /* opacity: 1;
-    transform: scale(1); */
-}
 .tomc-bookshelves__search-overlay{
     overflow-y: auto;
     overflow-x: hidden;
@@ -91,8 +92,34 @@
     transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
     box-sizing: border-box;
 }
+.tomc-bookshelves__box--active{
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+}
+.tomc-bookshelves__search-overlay__close{
+    position: absolute;
+    top: 13px;
+    right: 16px;
+    font-size: 2.1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: transparent;
+    color: #b41414;
+    line-height: 0.7;
+}
 .tomc-bookshelves__add-book{
     cursor: pointer;
+}
+.tomc-bookshelves--add-to-shelf{
+    background-color: #b41414;
+    color: white;
+    font-size: 16;
+    border-radius: 15px;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: block;
+    margin-top: 10px;
 }
 .tomc-bookshelves--new-name{
     width: 270px;

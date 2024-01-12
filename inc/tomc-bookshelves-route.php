@@ -13,6 +13,11 @@ function tomcBookshelvesRegisterRoute() {
         'callback' => 'deleteShelfProduct'
     ));
 
+    register_rest_route('tomcBookshelves/v1', 'manageProducts', array(
+        'methods' => 'POST',
+        'callback' => 'addBook'
+    ));
+
     register_rest_route('tomcBookshelves/v1', 'manageShelves', array(
         'methods' => 'POST',
         'callback' => 'addAllBooks'
@@ -63,9 +68,28 @@ function addAllBooks($data){
     }
 }
 
+function addBook($data){
+    $shelfId = sanitize_text_field($data['shelf']);
+    $productId = sanitize_text_field($data['product']);
+    global $wpdb;
+    $bookshelf_products_table = $wpdb->prefix . "tomc_bookshelf_products";
+    if (is_user_logged_in()){
+        $newShelfProduct = [];
+        $newShelfProduct['bookshelfid'] = $shelfId;
+        $newShelfProduct['productid'] = $productId;
+        global $wpdb;
+        $wpdb->insert($bookshelf_products_table, $newShelfProduct);
+        return 'success';
+    } else {
+        wp_safe_redirect(site_url('/my-account'));
+        return 'fail';
+    }
+}
+
 function tomcBookshelvesSearchResults($data) {
     $bookQuery = new WP_Query(array(
         'post_type' => 'product',
+        // 'category_name' => 'ebooks',
         's' => sanitize_text_field($data['term'])
     ));
 
@@ -92,10 +116,10 @@ function tomcBookshelvesSearchResults($data) {
             array_push($results, array(
                 'posttype' => 'product',
                 'title' => get_the_title($queryItem),
-                'permalink' => get_the_permalink($queryItem),
                 'thumbnail' => get_the_post_thumbnail_url($queryItem),
                 'productauthor' => $authors,
-                'excerpt' => get_the_excerpt($postId)
+                'excerpt' => get_the_excerpt($postId),
+                'id' => $postId
             ));
         }
     }
