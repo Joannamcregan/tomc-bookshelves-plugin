@@ -89,7 +89,7 @@ function addBook($data){
 function tomcBookshelvesSearchResults($data) {
     $bookQuery = new WP_Query(array(
         'post_type' => 'product',
-        // 'category_name' => 'ebooks',
+        'product_cat' => 'ebooks',
         's' => sanitize_text_field($data['term'])
     ));
 

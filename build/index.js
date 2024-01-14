@@ -123,7 +123,6 @@ class Bookshelves {
     }
   }
   addShelfProduct(e) {
-    console.log('addShelfProduct has been called');
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
         xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
@@ -134,8 +133,8 @@ class Bookshelves {
         'product': jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('product-id'),
         'shelf': this.searchOverlay.data('id')
       },
-      success: response => {
-        console.log(response);
+      success: $productId => {
+        location.reload(true);
       },
       error: response => {
         console.log(response);
