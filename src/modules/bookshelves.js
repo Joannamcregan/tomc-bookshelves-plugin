@@ -130,7 +130,7 @@ class Bookshelves {
                 ${results.map(item => `
                     <li>
                         ${item.thumbnail ? `<img src="${item.thumbnail}" />` : ''} 
-                        ${item.title}
+                        ${item.title ? '<br><p>' + item.title + '</p>' : ''}
                         ${item.excerpt ? '<br><br>' + item.excerpt : ''}
                         ${item.id ? '<button class="tomc-bookshelves--add-to-shelf" data-product-id = "' + item.id + '">Add to Shelf</button>' : ''}
                     </li>`).join("")}

@@ -32,7 +32,6 @@ class TOMCBookshelvesPlugin {
         add_action('admin_post_deleteshelf', array($this, 'deleteShelf'));
         add_action('admin_post_nopriv_deleteshelf', array($this, 'deleteShelf'));
         add_filter('template_include', array($this, 'loadTemplate'), 99);
-
     }
 
     function createShelf(){
@@ -119,9 +118,6 @@ class TOMCBookshelvesPlugin {
 
         if (post_exists('My Bookshelves', '', '', 'page', 'publish') == 0){
             $this->addMyBookshelvesPage();
-        }
-        if (post_exists('Add New Bookshelf', '', '', 'page', 'publish') == 0){
-            $this->addNewBookshelfPage();
         }
     }
 
