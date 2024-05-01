@@ -68,6 +68,10 @@ get_header();
                     ?></div>                 
                 <?php }
             ?></div>
+        <?php } else {
+            ?><div class="third-screen">
+                <p class="centered-text">We couldn't find any bookshelves. Create one!</p>
+            </div>
         <?php }
 
         ?><div class="tomc-bookshelves__search-overlay">

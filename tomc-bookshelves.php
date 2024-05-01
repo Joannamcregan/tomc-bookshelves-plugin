@@ -102,7 +102,7 @@ class TOMCBookshelvesPlugin {
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             userid bigint(20) unsigned NOT NULL,
             shelfname varchar(60) NOT NULL DEFAULT 'Roadtrip Reads',
-            createdate datetime NOT NULL
+            createdate datetime NOT NULL,
             PRIMARY KEY  (id),
             FOREIGN KEY  (userid) REFERENCES $this->users_table(id)
         ) $this->charset;");
