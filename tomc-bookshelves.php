@@ -22,8 +22,8 @@ class TOMCBookshelvesPlugin {
             'root_url' => get_site_url()
         ));
 
-        //add_action('activate_tomc-bookshelves/tomc-bookshelves.php', array($this, 'onActivate'));
-        add_action('init', array($this, 'onActivate'));
+        add_action('activate_tomc-bookshelves/tomc-bookshelves.php', array($this, 'onActivate'));
+        // add_action('init', array($this, 'onActivate'));
         add_action('init', array($this, 'registerScripts'));
         add_action('wp_enqueue_scripts', array($this, 'pluginFiles'));
         add_action('admin_post_createshelf', array($this, 'createShelf'));
