@@ -6,7 +6,7 @@ $userid = get_current_user_id();
 get_header();
 
 ?><main>
-    <div class="banner"><h1 class="centered-text">Your Bookshelves</h1></div>
+    <div class="banner"><h1 class="centered-text banner-heading-46">Your Shelves</h1></div>
     <?php if (is_user_logged_in()){
         ?><div class="third-screen paragraph-accent">
             <h2 class="centered-text">Add a New Bookshelf</h2>
