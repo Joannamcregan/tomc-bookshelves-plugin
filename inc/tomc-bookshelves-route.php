@@ -3,8 +3,8 @@
 add_action('rest_api_init', 'tomcBookshelvesRegisterRoute');
 
 function tomcBookshelvesRegisterRoute() {
-    register_rest_route('tomcBookshelves/v1', 'search', array(
-        'methods' => WP_REST_SERVER::READABLE,
+    register_rest_route('tomcBookshelves/v1', 'bookSearch', array(
+        'methods' => 'GET',
         'callback' => 'tomcBookshelvesSearchResults'
     ));
 
@@ -87,27 +87,72 @@ function addBook($data){
 }
 
 function tomcBookshelvesSearchResults($data) {
-    $bookQuery = new WP_Query(array(
-        'post_type' => 'product',
-        'product_cat' => 'ebooks',
-        's' => sanitize_text_field($data['term'])
-    ));
-
-    $results = array();
-
-    if ($bookQuery->posts) {
-        foreach($bookQuery->posts as $key => $queryItem) {
-            $authors = '';
-            $postId = url_to_postid( get_the_permalink($queryItem));
-            
-            array_push($results, array(
-                'posttype' => 'product',
-                'title' => get_the_title($queryItem),
-                'thumbnail' => get_the_post_thumbnail_url($queryItem),
-                'id' => $postId
-            ));
+    $resultsArr = [];
+    $searchTerm = sanitize_text_field($data['searchterm']);
+    $user = wp_get_current_user();
+    global $wpdb;
+    $books_table = $wpdb->prefix . "tomc_books";
+    $book_products_table = $wpdb->prefix . "tomc_book_products";
+    $posts_table = $wpdb->prefix . "posts";
+    $product_types_table = $wpdb->prefix . "tomc_product_types";
+    $pen_names_table = $wpdb->prefix . "tomc_pen_names_books";
+    if (is_user_logged_in()){
+        if (str_contains(strtoupper($searchTerm), 'BY')){
+            $query = 'select distinct b.id, b.title, b.product_image_id, c.productid, f.post_title as pen_name, b.book_description, b.createdate, d.type_name, g.id as product_url, "book" as "resulttype"
+            from %i b
+            join %i c on b.id = c.bookid
+            join %i d on c.typeid = d.id
+            join %i e on b.id = e.bookid
+            join %i f on e.pennameid = f.id
+            join %i g on c.productid = g.id
+            where concat(b.title, " by ", f.post_title) like %s
+            and b.islive = 1
+            order by b.createdate desc
+            limit 20';
+            $booksResults = $wpdb->get_results($wpdb->prepare($query, $books_table, $book_products_table, $product_types_table, $pen_names_table, $posts_table, $posts_table, '%' . $wpdb->esc_like($searchTerm) . '%'), ARRAY_A);
+            for($index = 0; $index < count($booksResults); $index++){
+                $booksResults[$index]['product_url'] = get_permalink($booksResults[$index]['product_url']);
+                $booksResults[$index]['product_image_id'] = get_the_post_thumbnail_url($booksResults[$index]['product_image_id']);
+            }
+            array_push($resultsArr, ...$booksResults);
         }
+        $query = 'select distinct b.id, b.title, b.product_image_id, c.productid, f.post_title as pen_name, b.book_description, b.createdate, d.type_name, g.id as product_url, "book" as "resulttype"
+        from %i b
+        join %i c on b.id = c.bookid
+        join %i d on c.typeid = d.id
+        join %i e on b.id = e.bookid
+        join %i f on e.pennameid = f.id
+        join %i g on c.productid = g.id
+        where b.title = %s
+        and b.islive = 1
+        order by b.createdate desc
+        limit 20';
+        $booksResults = $wpdb->get_results($wpdb->prepare($query, $books_table, $book_products_table, $product_types_table, $pen_names_table, $posts_table, $posts_table, $searchTerm), ARRAY_A);
+        for($index = 0; $index < count($booksResults); $index++){
+            $booksResults[$index]['product_url'] = get_permalink($booksResults[$index]['product_url']);
+            $booksResults[$index]['product_image_id'] = get_the_post_thumbnail_url($booksResults[$index]['product_image_id']);
+        }
+        array_push($resultsArr, ...$booksResults);
+        $query = 'select distinct b.id, b.title, b.product_image_id, c.productid, f.post_title as pen_name, b.book_description, b.createdate, d.type_name, g.id as product_url, "book" as "resulttype"
+        from %i b
+        join %i c on b.id = c.bookid
+        join %i d on c.typeid = d.id
+        join %i e on b.id = e.bookid
+        join %i f on e.pennameid = f.id
+        join %i g on c.productid = g.id
+        where b.title like %s
+        and b.islive = 1
+        order by b.createdate desc
+        limit 100';
+        $booksResults = $wpdb->get_results($wpdb->prepare($query, $books_table, $book_products_table, $product_types_table, $pen_names_table, $posts_table, $posts_table, '%' . $wpdb->esc_like($searchTerm) . '%'), ARRAY_A);
+        for($index = 0; $index < count($booksResults); $index++){
+            $booksResults[$index]['product_url'] = get_permalink($booksResults[$index]['product_url']);
+            $booksResults[$index]['product_image_id'] = get_the_post_thumbnail_url($booksResults[$index]['product_image_id']);
+        }
+        array_push($resultsArr, ...$booksResults);
+        return $resultsArr;
+    } else {
+        wp_safe_redirect(site_url('/my-account'));
+        return 'fail';
     }
-
-    return $results;
 }

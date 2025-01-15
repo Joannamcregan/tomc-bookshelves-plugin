@@ -82,9 +82,13 @@ get_header();
                     <div class="overlay-input-container">
                         <i class="fa fa-search search-overlay__icon" aria-hidden = "true"></i>
                         <!-- <span class="fa fa-search search-overlay__icon" aria-hidden = "true">S</span> -->
-                        <input type="text" class="search-term" placeholder = "What are you looking for?" id = "tomc-bookshelves__search-term">
+                        <input type="text" class="search-term" placeholder = "Search by title" id = "tomc-bookshelves__search-term">
+                        <button class="medium-purple-button" id="tomc-bookshelves--roll-results">search</button>
                     </div>
                 </div>
+            </div>
+            <div class="centered-text hidden tomc-book-organization--red-text" id="tomc-bookshelves--no-search-term">
+                <p>Enter a search term with at least 3 letters.</p>
             </div>
             <div class="tomc-bookshelves--container">
                 <div id="tomc-bookshelves--search-results">

@@ -1,7 +1,6 @@
 import $ from 'jquery';
 
 class Bookshelves {
-// 1. describe and create/initiate object
     constructor() {
         this.removeShelfButtons = $(".tomc-bookshelves--remove-shelf");
         this.renameButtons = $(".tomc-bookshelves--rename-shelf");
@@ -14,13 +13,12 @@ class Bookshelves {
         this.closeOverlay = $(".tomc-bookshelves__search-overlay__close");
         this.renameCancelButtons = $(".tomc-bookshelves--cancel-name");
         this.deleteCancelButtons = $(".tomc-bookshelves--cancel-delete");
+        this.searchButton = $('#tomc-bookshelves--roll-results');
         this.events();
         this.isSearchOverlayOpen = false;
-        this.isSpinnerVisible = false;
         this.previousValue;
         this.typingTimer;
     }
-// // 2. events
     events(){
         this.removeShelfButtons.on("click", function(){
             $(this).parent("div").parent("div").children("div.tomc-bookshelves--delete-shelf-overlay").removeClass("tomc-bookshelves--display-none");
@@ -42,11 +40,8 @@ class Bookshelves {
         this.addAllBooksButtons.on("click", this.addAllBooks.bind(this));
         this.addBookButtons.on("click", this.openSearchOverlay.bind(this));
         this.closeOverlay.on("click", this.closeSearchOverlay.bind(this));
-        $(document).on("keydown", this.keyPressDispatcher.bind(this));
-        this.searchField.on("keyup", this.typingLogic.bind(this));
+        this.searchButton.on("click", this.getResults.bind(this));
     }
-
-// // 3. methods (functions, actions...)
     deleteShelfProduct(e){
         $.ajax({
             beforeSend: (xhr) => {
@@ -95,14 +90,6 @@ class Bookshelves {
         $("body").removeClass("body-no-scroll");
         this.isSearchOverlayOpen = false;
     }
-    keyPressDispatcher(e) {
-        if(e.keyCode == 83 && !this.isOverlayOpen && !$("input, textarea").is(':focus')) {
-            this.openSearchOverlay()
-        }
-        if(e.keyCode == 27 && this.isOverlayOpen) {
-            this.closeSearchOverlay()
-        }
-    }
     addShelfProduct(e){
         $.ajax({
             beforeSend: (xhr) => {
@@ -122,40 +109,80 @@ class Bookshelves {
             }
         })
     }
-    getResults() {
-        $.getJSON(tomcBookshelvesData.root_url + "/wp-json/tomcBookshelves/v1/search?term=" + this.searchField.val(), (results) => {
-            this.resultsDiv.html(`
-            <div class="search-result">
-            ${results.length ? '' : "<p>Sorry! We weren't able to find anything that matches that search.</p>"}
-                ${results.map(item => `
-                    <li>
-                        ${item.thumbnail ? `<img src="${item.thumbnail}" />` : ''} 
-                        ${item.title ? '<br><p>' + item.title + '</p>' : ''}
-                        ${item.excerpt ? '<br><br>' + item.excerpt : ''}
-                        ${item.id ? '<button class="tomc-bookshelves--add-to-shelf" data-product-id = "' + item.id + '">Add to Shelf</button>' : ''}
-                    </li>`).join("")}
-            ${results.length ? "</li></div>" : '</div>'}
-            `);
-            this.addToShelfButtons = $(".tomc-bookshelves--add-to-shelf");
-            this.addToShelfButtons.on("click", this.addShelfProduct.bind(this));
-            this.isSpinnerVisible = false;
-        });
-    }
-    typingLogic() {
-        if (this.searchField.val() != this.previousValue) {
-            clearTimeout(this.typingTimer);
-            if (this.searchField .val()) {
-                if (!this.isSpinnerVisible) {
-                    this.resultsDiv.html('<div class="generic-content"><div class="spinner-loader"></div></div>');
-                    this.isSpinnerVisible = true;
+    getResults(e) {
+        if (this.searchField.val().length > 2){
+            let routeData = {
+                'searchterm' : this.searchField.val().substring(0, 300)
+            }
+            $(e.target).addClass('contracting');
+            $('#tomc-search--no-search-term').addClass('hidden');
+            $.ajax({
+                beforeSend: (xhr) => {
+                    xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+                },
+                url: tomcBookorgData.root_url + '/wp-json/tomcBookshelves/v1/bookSearch',
+                type: 'GET',
+                data: routeData,
+                success: (response) => {
+                    console.log(response);
+                    $(e.target).removeClass('contracting');
+                    let alreadyAddedBookIds = [];
+                    let alreadyAddedProductIds = [];
+                    if(response.length < 1){
+                        this.resultsDiv.html("<p class='centered-text'>Sorry! We couldn't find any matching results.</p>");
+                    } else {
+                        this.resultsDiv.html("");
+                        for(let i = 0; i < response.length; i++){
+                            let newDiv = $('<div />').addClass('tomc-search-result').attr('id', 'tomc-browse-genres--results--book-' + response[i]['id']);
+                            let newTitle = $('<h1 />').addClass('centered-text, small-heading').html(response[i]['title']);
+                            newDiv.append(newTitle);
+                            let newAuthor = $('<p />').html(response[i]['pen_name'].length > 0 ? 'by ' + response[i]['pen_name'] : 'by unknown or anonymous author');
+                            newDiv.append(newAuthor);
+                            let newBottomSection = $('<div />').addClass('tomc-browse--search-result-bottom-section');
+                            let newCoverDescription = $('<div />').addClass('tomc-search-result-cover-description');
+                            let newImage = $('<img />').attr('src', response[i]['product_image_id']).attr('alt', 'the cover for ' + response[i]['title']);
+                            newCoverDescription.append(newImage);
+                            let newDescription = $('<p />').addClass('bottomSection-description').html(response[i]['book_description'].substring(0, 500) + '...');
+                            newCoverDescription.append(newDescription);
+                            newBottomSection.append(newCoverDescription);
+                            newBottomSection.append('<h4 class="centered-text">available in</h4>');
+                            let newLink = $('<a />').addClass('centered-text').attr('href', response[i]['product_url']);
+                            let newFormat = $('<p />').html(response[i]['type_name'].slice(0, -1));
+                            newLink.append(newFormat);
+                            newBottomSection.append(newLink);
+                            newDiv.append(newBottomSection);
+                            this.resultsDiv.append(newDiv);
+                            newDiv.fadeIn();
+                            alreadyAddedBookIds.push(response[i]['id']);
+                            alreadyAddedProductIds.push(response[i]['productid']);
+                        }
+                    }
+                },
+                error: (response) => {
+                    // console.log('fail');
                 }
-                this.typingTimer = setTimeout(this.getResults.bind(this), 800);
-            } else {
-                this.resultsDiv.html('');
-                this.isSpinnerVisible = false;
-            }            
+            });
+        } else {
+            $('#tomc-bookshelves--no-search-term').removeClass('hidden');
         }
-        this.previousValue = this.searchField.val();
+        //need to change search results to display products separately
+
+        // $.getJSON(tomcBookshelvesData.root_url + "/wp-json/tomcBookshelves/v1/search?term=" + this.searchField.val(), (results) => {
+        //     this.resultsDiv.html(`
+        //     <div class="search-result">
+        //     ${results.length ? '' : "<p>Sorry! We weren't able to find anything that matches that search.</p>"}
+        //         ${results.map(item => `
+        //             <li>
+        //                 ${item.thumbnail ? `<img src="${item.thumbnail}" />` : ''} 
+        //                 ${item.title ? '<br><p>' + item.title + '</p>' : ''}
+        //                 ${item.excerpt ? '<br><br>' + item.excerpt : ''}
+        //                 ${item.id ? '<button class="tomc-bookshelves--add-to-shelf" data-product-id = "' + item.id + '">Add to Shelf</button>' : ''}
+        //             </li>`).join("")}
+        //     ${results.length ? "</li></div>" : '</div>'}
+        //     `);
+        //     this.addToShelfButtons = $(".tomc-bookshelves--add-to-shelf");
+        //     this.addToShelfButtons.on("click", this.addShelfProduct.bind(this));
+        // });
     }
 }
 
