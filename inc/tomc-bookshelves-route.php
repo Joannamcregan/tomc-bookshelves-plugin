@@ -13,7 +13,7 @@ function tomcBookshelvesRegisterRoute() {
         'callback' => 'deleteShelfProduct'
     ));
 
-    register_rest_route('tomcBookshelves/v1', 'manageProducts', array(
+    register_rest_route('tomcBookshelves/v1', 'addProductToShelf', array(
         'methods' => 'POST',
         'callback' => 'addBook'
     ));
@@ -79,7 +79,7 @@ function addBook($data){
         $newShelfProduct['productid'] = $productId;
         global $wpdb;
         $wpdb->insert($bookshelf_products_table, $newShelfProduct);
-        return 'success';
+        return 'logged in';
     } else {
         wp_safe_redirect(site_url('/my-account'));
         return 'fail';
@@ -98,7 +98,7 @@ function tomcBookshelvesSearchResults($data) {
     $pen_names_table = $wpdb->prefix . "tomc_pen_names_books";
     if (is_user_logged_in()){
         if (str_contains(strtoupper($searchTerm), 'BY')){
-            $query = 'select distinct b.id, b.title, b.product_image_id, c.productid, f.post_title as pen_name, b.book_description, b.createdate, d.type_name, g.id as product_url, "book" as "resulttype"
+            $query = 'select distinct b.id, b.title, b.product_image_id, c.productid, f.post_title as pen_name, b.book_description, d.type_name, g.id as product_url
             from %i b
             join %i c on b.id = c.bookid
             join %i d on c.typeid = d.id
