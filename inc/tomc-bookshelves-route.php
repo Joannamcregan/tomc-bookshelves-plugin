@@ -18,7 +18,7 @@ function tomcBookshelvesRegisterRoute() {
         'callback' => 'addBook'
     ));
 
-    register_rest_route('tomcBookshelves/v1', 'manageShelves', array(
+    register_rest_route('tomcBookshelves/v1', 'addAllBooks', array(
         'methods' => 'POST',
         'callback' => 'addAllBooks'
     ));
@@ -52,7 +52,8 @@ function addAllBooks($data){
         join %i t on tt.term_id = t.term_id
         join %i tr on tr.term_taxonomy_id = tt.term_taxonomy_id
         join %i p on p.id = tr.object_id
-        where t.name = 'ebooks'
+        where t.name like '%book%'
+        and p.post_status = 'publish'
         and p.post_author = %d", array(
             $bookshelf_products_table, 
             $shelfId, $term_taxonomy_table, 

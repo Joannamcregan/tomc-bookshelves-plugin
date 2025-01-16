@@ -1,7 +1,8 @@
 <?php global $wpdb;
 $bookshelves_table = $wpdb->prefix .  "tomc_member_bookshelves";
 $bookshelf_products_table = $wpdb->prefix . "tomc_bookshelf_products";
-$userid = get_current_user_id();
+$user = wp_get_current_user();
+$userid = $user->ID;
 
 get_header();
 
@@ -62,8 +63,10 @@ get_header();
                         <?php } else {
                             ?><div class="book-sections-container">
                                 <div class="gray-box tomc-bookshelves__add-book" data-shelf-id="<?php echo $shelf->id; ?>"><p>add a book</p></div>
-                                <div class="gray-box tomc-bookshelves--add-all-books" data-shelf-id="<?php echo $shelf->id; ?>"><p>add all books you've published</p></div>
-                            </div>
+                                <?php if (in_array( 'dc_vendor', (array) $user->roles )) {
+                                    ?><div class="gray-box tomc-bookshelves--add-all-books" data-shelf-id="<?php echo $shelf->id; ?>"><p>add all books you've published</p></div>
+                                <?php }                                
+                            ?></div>
                         <?php }
                     ?></div>                 
                 <?php }

@@ -76,17 +76,19 @@ class Bookshelves {
     });
   }
   addAllBooks(e) {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
         xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
       },
-      url: tomcBookshelvesData.root_url + '/wp-json/tomcBookshelves/v1/manageShelves',
+      url: tomcBookshelvesData.root_url + '/wp-json/tomcBookshelves/v1/addAllBooks',
       type: 'POST',
       data: {
         'shelf': jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('shelf-id')
       },
       success: response => {
-        location.reload(true);
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
+        // location.reload(true);
       },
       error: response => {
         // console.log(response);
@@ -94,12 +96,14 @@ class Bookshelves {
     });
   }
   openSearchOverlay(e) {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
     this.searchOverlay.addClass("tomc-bookshelves__box--active");
     this.searchOverlay.data('id', jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('shelf-id'));
     // console.log(this.searchOverlay.data('id'));
     jquery__WEBPACK_IMPORTED_MODULE_0___default()("body").addClass("body-no-scroll");
     this.searchField.val('');
     setTimeout(() => this.searchField.focus(), 301);
+    setTimeout(() => jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting'), 1000);
     this.isSearchOverlayOpen = true;
     return false;
   }
@@ -110,8 +114,7 @@ class Bookshelves {
     this.isSearchOverlayOpen = false;
   }
   addShelfProduct(e) {
-    console.log('product id is ' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('product-id'));
-    console.log('shelf id is ' + this.searchOverlay.data('id'));
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
         xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
@@ -122,8 +125,9 @@ class Bookshelves {
         'product': jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('product-id'),
         'shelf': this.searchOverlay.data('id')
       },
-      success: $productId => {
-        // location.reload(true);
+      success: response => {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
+        location.reload(true);
       },
       error: response => {
         // console.log(response);

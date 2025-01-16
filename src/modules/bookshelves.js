@@ -59,15 +59,17 @@ class Bookshelves {
         })
     }
     addAllBooks(e){
+        $(e.target).addClass('contracting')
         $.ajax({
             beforeSend: (xhr) => {
                 xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
             },
-            url: tomcBookshelvesData.root_url + '/wp-json/tomcBookshelves/v1/manageShelves',
+            url: tomcBookshelvesData.root_url + '/wp-json/tomcBookshelves/v1/addAllBooks',
             type: 'POST',
             data: {'shelf' : $(e.target).data('shelf-id')},
             success: (response) => {
-                location.reload(true);
+                $(e.target).removeClass('contracting')
+                // location.reload(true);
             },
             error: (response) => {
                 // console.log(response);
@@ -75,12 +77,14 @@ class Bookshelves {
         })
     }
     openSearchOverlay(e){
+        $(e.target).addClass('contracting');
         this.searchOverlay.addClass("tomc-bookshelves__box--active");
         this.searchOverlay.data('id', $(e.target).data('shelf-id'));
         // console.log(this.searchOverlay.data('id'));
         $("body").addClass("body-no-scroll");
         this.searchField.val('');
         setTimeout(() => this.searchField.focus(), 301);
+        setTimeout(() =>$(e.target).removeClass('contracting'), 1000);
         this.isSearchOverlayOpen = true;
         return false;
     }
@@ -91,8 +95,7 @@ class Bookshelves {
         this.isSearchOverlayOpen = false;
     }
     addShelfProduct(e){
-        console.log('product id is ' + $(e.target).data('product-id'));
-        console.log('shelf id is ' + this.searchOverlay.data('id'));
+        $(e.target).addClass('contracting');
         $.ajax({
             beforeSend: (xhr) => {
                 xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
@@ -103,8 +106,9 @@ class Bookshelves {
                 'product' : $(e.target).data('product-id'),
                 'shelf' : this.searchOverlay.data('id')
                 },
-            success: ($productId) => {
-                // location.reload(true);
+            success: (response) => {
+                $(e.target).removeClass('contracting');
+                location.reload(true);
             },
             error: (response) => {
                 // console.log(response);
