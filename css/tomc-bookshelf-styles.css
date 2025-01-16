@@ -108,7 +108,7 @@
     color: #b41414;
     line-height: 0.7;
 }
-.tomc-bookshelves__add-book{
+.tomc-bookshelves__add-book, .tomc-bookshelves--add-all-books{
     cursor: pointer;
 }
 .tomc-bookshelves--add-to-shelf{
