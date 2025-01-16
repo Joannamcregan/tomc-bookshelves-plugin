@@ -55,7 +55,7 @@ get_header();
                                 <div class="gray-box tomc-bookshelves__add-book" data-shelf-id="<?php echo $shelf->id; ?>"><p>add a book</p></div>
                                 <?php foreach($shelfproducts as $prod){
                                     ?><div class="book-section--small">
-                                        <img class="tomc-bookshelf--book-cover" src="<?php echo get_the_post_thumbnail_url($prod->productid); ?>"/>
+                                        <img class="tomc-bookshelf--book-cover" src="<?php echo get_the_post_thumbnail_url($prod->productid) ? get_the_post_thumbnail_url($prod->productid) : get_theme_file_uri('/images/cover_placeholder.jpg'); ?>"/>
                                         <button aria-label="remove book" class="tomc-bookshelves--remove-book" data-product-id="<?php echo $prod->id; ?>">-</button>
                                     </div> 
                                 <?php }
