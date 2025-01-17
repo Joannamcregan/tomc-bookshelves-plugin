@@ -58,17 +58,17 @@ class Bookshelves {
             }
         })
     }
-    addAllBooks(e){
-        $(e.target).addClass('contracting')
+    addAllBooks(){
+        this.addAllBooksButtons.addClass('contracting')
         $.ajax({
             beforeSend: (xhr) => {
                 xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
             },
             url: tomcBookshelvesData.root_url + '/wp-json/tomcBookshelves/v1/addAllBooks',
             type: 'POST',
-            data: {'shelf' : $(e.target).data('shelf-id')},
+            data: {'shelf' : this.addAllBooksButtons.data('shelf-id')},
             success: (response) => {
-                $(e.target).removeClass('contracting')
+                this.addAllBooksButtons.removeClass('contracting')
                 location.reload(true);
             },
             error: (response) => {
@@ -76,15 +76,15 @@ class Bookshelves {
             }
         })
     }
-    openSearchOverlay(e){
-        $(e.target).addClass('contracting');
+    openSearchOverlay(){
+        this.addBookButtons.addClass('contracting');
         this.searchOverlay.addClass("tomc-bookshelves__box--active");
-        this.searchOverlay.data('id', $(e.target).data('shelf-id'));
+        this.searchOverlay.data('id', this.addBookButtons.data('shelf-id'));
         // console.log(this.searchOverlay.data('id'));
         $("body").addClass("body-no-scroll");
         this.searchField.val('');
         setTimeout(() => this.searchField.focus(), 301);
-        setTimeout(() =>$(e.target).removeClass('contracting'), 1000);
+        setTimeout(() => this.addBookButtons.removeClass('contracting'), 1000);
         this.isSearchOverlayOpen = true;
         return false;
     }
@@ -115,12 +115,12 @@ class Bookshelves {
             }
         })
     }
-    getResults(e) {
+    getResults() {
         if (this.searchField.val().length > 2){
             let routeData = {
                 'searchterm' : this.searchField.val().substring(0, 300)
             }
-            $(e.target).addClass('contracting');
+            this.searchButton.addClass('contracting');
             $('#tomc-search--no-search-term').addClass('hidden');
             $.ajax({
                 beforeSend: (xhr) => {
@@ -130,7 +130,7 @@ class Bookshelves {
                 type: 'GET',
                 data: routeData,
                 success: (response) => {
-                    $(e.target).removeClass('contracting');
+                    this.searchButton.removeClass('contracting');
                     if(response.length < 1){
                         this.resultsDiv.html("<p class='centered-text'>Sorry! We couldn't find any matching results.</p>");
                     } else {
@@ -165,24 +165,6 @@ class Bookshelves {
         } else {
             $('#tomc-bookshelves--no-search-term').removeClass('hidden');
         }
-        //need to change search results to display products separately
-
-        // $.getJSON(tomcBookshelvesData.root_url + "/wp-json/tomcBookshelves/v1/search?term=" + this.searchField.val(), (results) => {
-        //     this.resultsDiv.html(`
-        //     <div class="search-result">
-        //     ${results.length ? '' : "<p>Sorry! We weren't able to find anything that matches that search.</p>"}
-        //         ${results.map(item => `
-        //             <li>
-        //                 ${item.thumbnail ? `<img src="${item.thumbnail}" />` : ''} 
-        //                 ${item.title ? '<br><p>' + item.title + '</p>' : ''}
-        //                 ${item.excerpt ? '<br><br>' + item.excerpt : ''}
-        //                 ${item.id ? '<button class="tomc-bookshelves--add-to-shelf" data-product-id = "' + item.id + '">Add to Shelf</button>' : ''}
-        //             </li>`).join("")}
-        //     ${results.length ? "</li></div>" : '</div>'}
-        //     `);
-            this.addToShelfButtons = $(".tomc-bookshelves--add-to-shelf");
-            this.addToShelfButtons;
-        // });
     }
 }
 

@@ -75,8 +75,8 @@ class Bookshelves {
       }
     });
   }
-  addAllBooks(e) {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
+  addAllBooks() {
+    this.addAllBooksButtons.addClass('contracting');
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
         xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
@@ -84,10 +84,10 @@ class Bookshelves {
       url: tomcBookshelvesData.root_url + '/wp-json/tomcBookshelves/v1/addAllBooks',
       type: 'POST',
       data: {
-        'shelf': jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('shelf-id')
+        'shelf': this.addAllBooksButtons.data('shelf-id')
       },
       success: response => {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
+        this.addAllBooksButtons.removeClass('contracting');
         location.reload(true);
       },
       error: response => {
@@ -95,15 +95,15 @@ class Bookshelves {
       }
     });
   }
-  openSearchOverlay(e) {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
+  openSearchOverlay() {
+    this.addBookButtons.addClass('contracting');
     this.searchOverlay.addClass("tomc-bookshelves__box--active");
-    this.searchOverlay.data('id', jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('shelf-id'));
+    this.searchOverlay.data('id', this.addBookButtons.data('shelf-id'));
     // console.log(this.searchOverlay.data('id'));
     jquery__WEBPACK_IMPORTED_MODULE_0___default()("body").addClass("body-no-scroll");
     this.searchField.val('');
     setTimeout(() => this.searchField.focus(), 301);
-    setTimeout(() => jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting'), 1000);
+    setTimeout(() => this.addBookButtons.removeClass('contracting'), 1000);
     this.isSearchOverlayOpen = true;
     return false;
   }
@@ -134,12 +134,12 @@ class Bookshelves {
       }
     });
   }
-  getResults(e) {
+  getResults() {
     if (this.searchField.val().length > 2) {
       let routeData = {
         'searchterm': this.searchField.val().substring(0, 300)
       };
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
+      this.searchButton.addClass('contracting');
       jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-search--no-search-term').addClass('hidden');
       jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
         beforeSend: xhr => {
@@ -149,7 +149,7 @@ class Bookshelves {
         type: 'GET',
         data: routeData,
         success: response => {
-          jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
+          this.searchButton.removeClass('contracting');
           if (response.length < 1) {
             this.resultsDiv.html("<p class='centered-text'>Sorry! We couldn't find any matching results.</p>");
           } else {
@@ -184,24 +184,6 @@ class Bookshelves {
     } else {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-bookshelves--no-search-term').removeClass('hidden');
     }
-    //need to change search results to display products separately
-
-    // $.getJSON(tomcBookshelvesData.root_url + "/wp-json/tomcBookshelves/v1/search?term=" + this.searchField.val(), (results) => {
-    //     this.resultsDiv.html(`
-    //     <div class="search-result">
-    //     ${results.length ? '' : "<p>Sorry! We weren't able to find anything that matches that search.</p>"}
-    //         ${results.map(item => `
-    //             <li>
-    //                 ${item.thumbnail ? `<img src="${item.thumbnail}" />` : ''} 
-    //                 ${item.title ? '<br><p>' + item.title + '</p>' : ''}
-    //                 ${item.excerpt ? '<br><br>' + item.excerpt : ''}
-    //                 ${item.id ? '<button class="tomc-bookshelves--add-to-shelf" data-product-id = "' + item.id + '">Add to Shelf</button>' : ''}
-    //             </li>`).join("")}
-    //     ${results.length ? "</li></div>" : '</div>'}
-    //     `);
-    this.addToShelfButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".tomc-bookshelves--add-to-shelf");
-    this.addToShelfButtons;
-    // });
   }
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Bookshelves);

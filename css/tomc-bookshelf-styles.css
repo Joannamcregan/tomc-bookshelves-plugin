@@ -108,8 +108,30 @@
     color: #b41414;
     line-height: 0.7;
 }
-.tomc-bookshelves__add-book, .tomc-bookshelves--add-all-books{
+.tomc-bookshelves__add-container{
+    display: flex;
+    align-items: center;
+}
+.tomc-bookshelves__add-book{
     cursor: pointer;
+    background: #0c6980;
+    color: white;
+    text-shadow: black 0px 0px 2px;
+    padding: 10px;
+    margin: 10px;
+    height: fit-content;
+    width: 80px;
+    text-align: center;
+}
+.tomc-bookshelves--add-all-books{
+    cursor: pointer;
+    background: #4c0548;
+    color: white;
+    padding: 10px;
+    margin: 10px;
+    height: fit-content;
+    width: 80px;
+    text-align: center;
 }
 .tomc-bookshelves--add-to-shelf{
     background-color: #b41414;

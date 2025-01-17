@@ -52,7 +52,9 @@ get_header();
                         <?php $shelfproducts = $wpdb->get_results("SELECT productid, id from $bookshelf_products_table WHERE bookshelfid = $shelf->id;"); 
                         if ($shelfproducts){
                             ?><div class="book-sections-container">
-                                <div class="gray-box tomc-bookshelves__add-book" data-shelf-id="<?php echo $shelf->id; ?>"><p>add a book</p></div>
+                                <div class="tomc-bookshelves__add-container">
+                                    <p class="tomc-bookshelves__add-book" data-shelf-id="<?php echo $shelf->id; ?>">add a book</p>
+                                </div>
                                 <?php foreach($shelfproducts as $prod){
                                     ?><div class="book-section--small">
                                         <img class="tomc-bookshelf--book-cover" src="<?php echo get_the_post_thumbnail_url($prod->productid) ? get_the_post_thumbnail_url($prod->productid) : get_theme_file_uri('/images/cover_placeholder.jpg'); ?>"/>
@@ -62,11 +64,13 @@ get_header();
                             ?></div>
                         <?php } else {
                             ?><div class="book-sections-container">
-                                <div class="gray-box tomc-bookshelves__add-book" data-shelf-id="<?php echo $shelf->id; ?>"><p>add a book</p></div>
-                                <?php if (in_array( 'dc_vendor', (array) $user->roles )) {
-                                    ?><div class="gray-box tomc-bookshelves--add-all-books" data-shelf-id="<?php echo $shelf->id; ?>"><p>add all books you've published</p></div>
-                                <?php }                                
-                            ?></div>
+                                <div class="tomc-bookshelves__add-container">
+                                    <p class="tomc-bookshelves__add-book" data-shelf-id="<?php echo $shelf->id; ?>">add a book</p>
+                                    <?php if (in_array( 'dc_vendor', (array) $user->roles )) {
+                                        ?><p class="tomc-bookshelves--add-all-books" data-shelf-id="<?php echo $shelf->id; ?>">add all books you've published</p>
+                                    <?php } 
+                                ?></div>                               
+                            </div>
                         <?php }
                     ?></div>                 
                 <?php }
