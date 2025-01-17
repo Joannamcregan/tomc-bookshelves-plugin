@@ -69,7 +69,7 @@ class Bookshelves {
             data: {'shelf' : $(e.target).data('shelf-id')},
             success: (response) => {
                 $(e.target).removeClass('contracting')
-                // location.reload(true);
+                location.reload(true);
             },
             error: (response) => {
                 // console.log(response);

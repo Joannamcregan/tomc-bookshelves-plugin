@@ -88,7 +88,7 @@ class Bookshelves {
       },
       success: response => {
         jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
-        // location.reload(true);
+        location.reload(true);
       },
       error: response => {
         // console.log(response);
