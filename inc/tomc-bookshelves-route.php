@@ -9,7 +9,7 @@ function tomcBookshelvesRegisterRoute() {
     ));
 
     register_rest_route('tomcBookshelves/v1', 'deleteShelfProduct', array(
-        'methods' => 'DELETE',
+        'methods' => 'POST',
         'callback' => 'deleteShelfProduct'
     ));
 
