@@ -62,7 +62,7 @@ class Bookshelves {
       beforeSend: xhr => {
         xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
       },
-      url: tomcBookshelvesData.root_url + '/wp-json/tomcBookshelves/v1/manageProducts',
+      url: tomcBookshelvesData.root_url + '/wp-json/tomcBookshelves/v1/deleteShelfProduct',
       type: 'DELETE',
       data: {
         'product': jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('product-id')

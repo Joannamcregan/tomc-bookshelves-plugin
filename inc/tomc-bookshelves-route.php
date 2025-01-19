@@ -8,7 +8,7 @@ function tomcBookshelvesRegisterRoute() {
         'callback' => 'tomcBookshelvesSearchResults'
     ));
 
-    register_rest_route('tomcBookshelves/v1', 'manageProducts', array(
+    register_rest_route('tomcBookshelves/v1', 'deleteShelfProduct', array(
         'methods' => 'DELETE',
         'callback' => 'deleteShelfProduct'
     ));
