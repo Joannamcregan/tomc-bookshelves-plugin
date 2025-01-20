@@ -32,7 +32,7 @@ function deleteShelfProduct($data){
     if (is_user_logged_in()){
         $query = 'delete from %i where productid = %d and bookshelfid = %d';
         $deletion = $wpdb->get_results($wpdb->prepare($query, $bookshelf_products_table, $productId, $shelfId), ARRAY_A);
-        return 'success';
+        return $wpdb->prepare($query, $bookshelf_products_table, $productId, $shelfId);
     } else {
         wp_safe_redirect(site_url('/my-account'));
         return 'fail';
