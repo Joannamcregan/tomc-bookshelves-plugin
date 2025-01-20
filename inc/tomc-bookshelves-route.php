@@ -28,13 +28,13 @@ function deleteShelfProduct($data){
     $shelfProductId = sanitize_text_field($data['product']);
     global $wpdb;
     $bookshelf_products_table = $wpdb->prefix . "tomc_bookshelf_products";
-    if (is_user_logged_in()){
-        $wpdb->delete($bookshelf_products_table, array('id' => $shelfProductId));
-        return 'success';
-    } else {
-        wp_safe_redirect(site_url('/my-account'));
-        return 'fail';
-    }
+    // if (is_user_logged_in()){
+    //     $wpdb->delete($bookshelf_products_table, array('id' => $shelfProductId));
+    //     return 'success';
+    // } else {
+    //     wp_safe_redirect(site_url('/my-account'));
+    //     return 'fail';
+    // }
 }
 
 function addAllBooks($data){
