@@ -58,6 +58,7 @@ class Bookshelves {
     this.searchButton.on("click", this.getResults.bind(this));
   }
   deleteShelfProduct(e) {
+    console.log(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('product-id'));
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
         xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
