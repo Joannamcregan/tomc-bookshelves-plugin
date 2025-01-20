@@ -81,10 +81,10 @@ class Bookshelves {
             }
         })
     }
-    openSearchOverlay(){
+    openSearchOverlay(e){
         this.addBookButtons.addClass('contracting');
         this.searchOverlay.addClass("tomc-bookshelves__box--active");
-        this.searchOverlay.data('id', this.addBookButtons.data('shelf-id'));
+        this.searchOverlay.data('id', $(e.target).data('shelf-id'));
         console.log(this.searchOverlay.data('id'));
         $("body").addClass("body-no-scroll");
         this.searchField.val('');
