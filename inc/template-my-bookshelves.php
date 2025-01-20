@@ -49,7 +49,7 @@ get_header();
                             </form>
                             <button class="tomc-bookshelves--cancel-delete tomc-bookshelves--cancel-button">cancel</button>
                         </div>
-                        <?php $shelfproducts = $wpdb->get_results("SELECT productid, id from $bookshelf_products_table WHERE bookshelfid = $shelf->id;"); 
+                        <?php $shelfproducts = $wpdb->get_results("SELECT productid from $bookshelf_products_table WHERE bookshelfid = $shelf->id;"); 
                         if ($shelfproducts){
                             ?><div class="book-sections-container">
                                 <div class="tomc-bookshelves__add-container">
@@ -58,7 +58,7 @@ get_header();
                                 <?php foreach($shelfproducts as $prod){
                                     ?><div class="book-section--small">
                                         <img class="tomc-bookshelf--book-cover" src="<?php echo get_the_post_thumbnail_url($prod->productid) ? get_the_post_thumbnail_url($prod->productid) : get_theme_file_uri('/images/cover_placeholder.jpg'); ?>"/>
-                                        <button aria-label="remove book" class="tomc-bookshelves--remove-book" data-product-id="<?php echo $prod->id; ?>">-</button>
+                                        <button aria-label="remove book" class="tomc-bookshelves--remove-book" data-product-id="<?php echo $prod->productid; ?>">-</button>
                                     </div> 
                                 <?php }
                             ?></div>
