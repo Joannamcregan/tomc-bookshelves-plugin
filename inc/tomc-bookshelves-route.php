@@ -33,7 +33,7 @@ function deleteShelfProduct($data){
         // $wpdb->delete($bookshelf_products_table, array('productid' => $shelfProductId, 'bookshelfid' => $shelfId));
         $query = 'delete from $i where productid = %d and bookshelfid = %d';
         $deletion = $wpdb->get_results($wpdb->prepare($query, $productId, $shelfId), ARRAY_A);
-        return 'success';
+        return $wpdb->prepare($query, $productId, $shelfId);
     } else {
         wp_safe_redirect(site_url('/my-account'));
         return 'fail';
