@@ -139,6 +139,7 @@ class Bookshelves {
                     if(response.length < 1){
                         this.resultsDiv.html("<p class='centered-text'>Sorry! We couldn't find any matching results.</p>");
                     } else {
+                        response = Array.from(new Set(response));
                         this.resultsDiv.html("");
                         for(let i = 0; i < response.length; i++){
                             let newDiv = $('<div />').addClass('tomc-search-result').attr('id', 'tomc-browse-genres--results--book-' + response[i]['id']);
