@@ -53,7 +53,7 @@ get_header();
                         if ($shelfproducts){
                             ?><div class="book-sections-container">
                                 <div class="tomc-bookshelves__add-container">
-                                    <p class="tomc-bookshelves__add-book" data-shelf-id="<?php echo $shelf->id; ?>">add a book</p>
+                                    <p class="tomc-bookshelves__add-book" data-shelf-id="<?php echo $shelf->id; ?>">add a book <?php echo $shelf->id; ?></p>
                                 </div>
                                 <?php foreach($shelfproducts as $prod){
                                     ?><div class="book-section--small">
@@ -65,7 +65,7 @@ get_header();
                         <?php } else {
                             ?><div class="book-sections-container">
                                 <div class="tomc-bookshelves__add-container">
-                                    <p class="tomc-bookshelves__add-book" data-shelf-id="<?php echo $shelf->id; ?>">add a book</p>
+                                    <p class="tomc-bookshelves__add-book" data-shelf-id="<?php echo $shelf->id; ?>">add a book <?php echo $shelf->id; ?></p>
                                     <?php if (in_array( 'dc_vendor', (array) $user->roles )) {
                                         ?><p class="tomc-bookshelves--add-all-books" data-shelf-id="<?php echo $shelf->id; ?>">add all books you've published</p>
                                     <?php } 
