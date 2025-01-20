@@ -45,20 +45,20 @@ class Bookshelves {
     deleteShelfProduct(e){
         console.log('called delete');
         console.log($(e.target).data('product-id'));
-        $.ajax({
-            beforeSend: (xhr) => {
-                xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
-            },
-            url: tomcBookshelvesData.root_url + '/wp-json/tomcBookshelves/v1/deleteShelfProduct',
-            type: 'POST',
-            data: {'product' : $(e.target).data('product-id')},
-            success: (response) => {
-                $(e.target).parent("div.book-section--small").slideUp();
-            },
-            error: (response) => {
-                // console.log(response);
-            }
-        })
+        // $.ajax({
+        //     beforeSend: (xhr) => {
+        //         xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+        //     },
+        //     url: tomcBookshelvesData.root_url + '/wp-json/tomcBookshelves/v1/deleteShelfProduct',
+        //     type: 'POST',
+        //     data: {'product' : $(e.target).data('product-id')},
+        //     success: (response) => {
+        //         $(e.target).parent("div.book-section--small").slideUp();
+        //     },
+        //     error: (response) => {
+        //         // console.log(response);
+        //     }
+        // })
     }
     addAllBooks(){
         this.addAllBooksButtons.addClass('contracting')
