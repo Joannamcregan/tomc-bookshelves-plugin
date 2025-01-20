@@ -70,9 +70,10 @@ class Bookshelves {
       },
       success: response => {
         jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent("div.book-section--small").slideUp();
+        console.log(response);
       },
       error: response => {
-        // console.log(response);
+        console.log(response);
       }
     });
   }

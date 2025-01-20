@@ -55,9 +55,10 @@ class Bookshelves {
             },
             success: (response) => {
                 $(e.target).parent("div.book-section--small").slideUp();
+                console.log(response);
             },
             error: (response) => {
-                // console.log(response);
+                console.log(response);
             }
         })
     }
