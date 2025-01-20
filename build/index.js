@@ -58,7 +58,6 @@ class Bookshelves {
     this.searchButton.on("click", this.getResults.bind(this));
   }
   deleteShelfProduct(e) {
-    console.log(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('.book-sections-container').find('.tomc-bookshelves__add-book').data('shelf-id'));
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
         xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
@@ -71,10 +70,9 @@ class Bookshelves {
       },
       success: response => {
         jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent("div.book-section--small").slideUp();
-        console.log(response);
       },
       error: response => {
-        console.log(response);
+        // console.log(response);
       }
     });
   }
@@ -102,7 +100,6 @@ class Bookshelves {
     this.addBookButtons.addClass('contracting');
     this.searchOverlay.addClass("tomc-bookshelves__box--active");
     this.searchOverlay.data('id', jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('shelf-id'));
-    console.log(this.searchOverlay.data('id'));
     jquery__WEBPACK_IMPORTED_MODULE_0___default()("body").addClass("body-no-scroll");
     this.searchField.val('');
     setTimeout(() => this.searchField.focus(), 301);
