@@ -31,8 +31,8 @@ function deleteShelfProduct($data){
     $bookshelf_products_table = $wpdb->prefix . "tomc_bookshelf_products";
     if (is_user_logged_in()){
         $query = 'delete from %i where productid = %d and bookshelfid = %d';
-        $deletion = $wpdb->get_results($wpdb->prepare($query, $bookshelf_products_table, $productId, $shelfId), ARRAY_A);
-        return $wpdb->prepare($query, $bookshelf_products_table, $productId, $shelfId);
+        $deletion = $wpdb->get_results($wpdb->prepare($query, $bookshelf_products_table, $shelfProductId, $shelfId), ARRAY_A);
+        // return $wpdb->prepare($query, $bookshelf_products_table, $productId, $shelfId);
     } else {
         wp_safe_redirect(site_url('/my-account'));
         return 'fail';

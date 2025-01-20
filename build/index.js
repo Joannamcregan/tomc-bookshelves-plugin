@@ -58,7 +58,7 @@ class Bookshelves {
     this.searchButton.on("click", this.getResults.bind(this));
   }
   deleteShelfProduct(e) {
-    console.log(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('product-id'));
+    // console.log($(e.target).data('product-id'));
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
         xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
@@ -71,10 +71,10 @@ class Bookshelves {
       },
       success: response => {
         jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent("div.book-section--small").slideUp();
-        console.log(response);
+        // console.log(response);
       },
       error: response => {
-        console.log(response);
+        // console.log(response);
       }
     });
   }
