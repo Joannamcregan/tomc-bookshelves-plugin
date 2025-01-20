@@ -55,8 +55,9 @@ class Bookshelves {
                 'shelf' : $(e.target).closest('.book-sections-container').find('.tomc-bookshelves__add-book').data('shelf-id')
             },
             success: (response) => {
-                $(e.target).find(".book-section--small").removeClass('book-section--small').fadeOut();
+                // $(e.target).find(".book-section--small").removeClass('book-section--small').fadeOut();
                 // console.log(response);
+                location.reload(true);
             },
             error: (response) => {
                 // console.log(response);

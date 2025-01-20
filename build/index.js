@@ -70,8 +70,9 @@ class Bookshelves {
         'shelf': jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('.book-sections-container').find('.tomc-bookshelves__add-book').data('shelf-id')
       },
       success: response => {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).find(".book-section--small").removeClass('book-section--small').fadeOut();
+        // $(e.target).find(".book-section--small").removeClass('book-section--small').fadeOut();
         // console.log(response);
+        location.reload(true);
       },
       error: response => {
         // console.log(response);
