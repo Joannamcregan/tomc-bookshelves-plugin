@@ -29,6 +29,7 @@ class Bookshelves {
     this.renameCancelButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".tomc-bookshelves--cancel-name");
     this.deleteCancelButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".tomc-bookshelves--cancel-delete");
     this.searchButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-bookshelves--roll-results');
+    this.saveNewShelfButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.tomc-bookshelves--save-name');
     this.events();
     this.isSearchOverlayOpen = false;
     this.previousValue;
@@ -56,6 +57,10 @@ class Bookshelves {
     this.addBookButtons.on("click", this.openSearchOverlay.bind(this));
     this.closeOverlay.on("click", this.closeSearchOverlay.bind(this));
     this.searchButton.on("click", this.getResults.bind(this));
+    this.saveNewShelfButton.on('click', this.contractButton.bind(this));
+  }
+  contractButton(e) {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
   }
   deleteShelfProduct(e) {
     // console.log($(e.target).data('product-id'));

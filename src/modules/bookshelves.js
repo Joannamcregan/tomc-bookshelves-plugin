@@ -14,6 +14,7 @@ class Bookshelves {
         this.renameCancelButtons = $(".tomc-bookshelves--cancel-name");
         this.deleteCancelButtons = $(".tomc-bookshelves--cancel-delete");
         this.searchButton = $('#tomc-bookshelves--roll-results');
+        this.saveNewShelfButton = $('.tomc-bookshelves--save-name');
         this.events();
         this.isSearchOverlayOpen = false;
         this.previousValue;
@@ -41,6 +42,10 @@ class Bookshelves {
         this.addBookButtons.on("click", this.openSearchOverlay.bind(this));
         this.closeOverlay.on("click", this.closeSearchOverlay.bind(this));
         this.searchButton.on("click", this.getResults.bind(this));
+        this.saveNewShelfButton.on('click', this.contractButton.bind(this));
+    }
+    contractButton(e){
+        $(e.target).addClass('contracting');
     }
     deleteShelfProduct(e){
         // console.log($(e.target).data('product-id'));
