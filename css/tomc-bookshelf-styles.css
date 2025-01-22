@@ -46,7 +46,7 @@
     margin: 0px 10px 20px 20px;
     cursor: pointer;
 }
-.tomc-bookshelves--delete-shelf{
+.tomc-bookshelves--delete-shelf, .tomc-bookshelves--delete-book{
     background-color: #602f32;
     color: white;
     font-size: 16;
@@ -65,7 +65,7 @@
     border-radius: 50%;
     cursor: pointer;
 }
-.tomc-bookshelves--delete-shelf-overlay{
+.tomc-bookshelves--delete-shelf-overlay, .tomc-bookshelves--delete-book-overlay{
     display: block;
     z-index: 1111;
     position: fixed;
@@ -148,7 +148,4 @@
     height: 30px;
     border-radius: 5px;
     margin: 10px auto
-}
-.tomc-bookshelves--display-none{
-    display: none;
 }

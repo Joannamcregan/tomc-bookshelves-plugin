@@ -31,7 +31,7 @@ get_header();
                             <h3 class="left-text sans-text"><?php echo str_replace("\'", "'", $shelf->shelfname); ?></h3>
                             <button class="tomc-bookshelves--rename-shelf">rename shelf</button><button class="tomc-bookshelves--remove-shelf">delete shelf</button>
                         </div>
-                        <div class="tomc-bookshelves--shelf-name-center tomc-bookshelves--display-none">
+                        <div class="tomc-bookshelves--shelf-name-center hidden">
                             <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="POST">
                                 <input type="hidden" name="action" value="renameshelf">
                                 <input type="hidden" name="shelfid" value="<?php echo $shelf->id; ?>">
@@ -40,7 +40,7 @@ get_header();
                             </form>
                             <button class="tomc-bookshelves--cancel-name tomc-bookshelves--cancel-button">cancel</button>
                         </div>
-                        <div class="tomc-bookshelves--delete-shelf-overlay tomc-bookshelves--display-none">
+                        <div class="tomc-bookshelves--delete-shelf-overlay hidden">
                             <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="POST">
                                 <input type="hidden" name="action" value="deleteshelf">
                                 <input type="hidden" name="shelfid" value="<?php echo $shelf->id; ?>">
@@ -48,6 +48,11 @@ get_header();
                                 <button class="tomc-bookshelves--delete-shelf">delete shelf</button>
                             </form>
                             <button class="tomc-bookshelves--cancel-delete tomc-bookshelves--cancel-button">cancel</button>
+                        </div>
+                        <div class="tomc-bookshelves--delete-book-overlay hidden">
+                            <p class="centered-text">Are you sure?</p>
+                            <button class="tomc-bookshelves--delete-book">delete book</button>
+                            <button class="tomc-bookshelves--cancel-delete-book tomc-bookshelves--cancel-button">cancel</button>
                         </div>
                         <?php $shelfproducts = $wpdb->get_results("SELECT productid from $bookshelf_products_table WHERE bookshelfid = $shelf->id;"); 
                         if ($shelfproducts){
