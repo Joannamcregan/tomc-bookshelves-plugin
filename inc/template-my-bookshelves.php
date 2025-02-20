@@ -84,8 +84,10 @@ get_header();
                                         <?php } else {
                                             ?><div class="tomc-bookshelf-placeholder-book">
                                                 <img src="<?php echo get_theme_file_uri('/images/cover_placeholder.jpg'); ?>" aria-hidden="true"/>
-                                                <p><?php echo $shelfproducts[$j]['title']; ?></p>
-                                                <p><?php echo 'by ' . $shelfproducts[$j]['penname']; ?></p>
+                                                <div>
+                                                    <p><?php echo $shelfproducts[$j]['title']; ?></p>
+                                                    <p><?php echo 'by ' . $shelfproducts[$j]['penname']; ?></p>
+                                                </div>
                                             </div>
                                         <?php }
                                         
