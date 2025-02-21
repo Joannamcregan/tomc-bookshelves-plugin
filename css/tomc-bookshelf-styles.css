@@ -4,6 +4,26 @@
     margin: 0 auto 0 auto;
     border: solid gray 3px;
 }
+.tomc-bookshelf-placeholder-book{
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+}
+.tomc-bookshelf-placeholder-book div{
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    text-align: right;
+    color: black;
+    text-shadow: 0px 0px 3px white;
+    max-width: 100px;
+}
+.tomc-bookshelf-placeholder-book img{
+    max-width: 150px !important;
+    height: auto !important;
+    margin: 0 auto 0 auto;
+    border: solid gray 3px;
+}
 .tomc-bookshelves--save-name{
     background-color: #0c6980;
     color: white;
